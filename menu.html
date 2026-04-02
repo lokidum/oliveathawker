@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menus &amp; Banquets — Olive at Hawker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* =============================================
+   RESET & ROOT
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+:root {
+  /* Brand palette */
+  --c-bg:          #F5F0E8;
+  --c-primary:     #1A1814;
+  --c-accent:      #8B7355;
+  --c-surface:     #3D3529;
+  --c-surface-mid: #2E2920;
+  --c-surface-deep:#252018;
+  --c-text:        #1A1814;
+  --c-muted:       #7A7265;
+  --c-light:       #F5F0E8;
+  --c-highlight:   #C4A77D;
+  --c-border:      #D4CCBE;
+  --c-aegean:      #3D5A4F;
+  --c-terracotta:  #C4603A;
+  /* Spacing */
+  --sp-xs:  4px;
+  --sp-sm:  8px;
+  --sp-md:  16px;
+  --sp-lg:  24px;
+  --sp-xl:  32px;
+  --sp-2xl: 48px;
+  --sp-3xl: 64px;
+  --sp-4xl: 96px;
+  /* Shared */
+  --radius: 8px;
+  --max-w:  1320px;
+}
+
+/* =============================================
+   BASE
+   ============================================= */
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--c-text);
+  background: var(--c-bg);
+  overflow-x: hidden;
+}
+
+/* Stone/fresco noise */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--c-bg); }
+::-webkit-scrollbar-thumb { background: rgba(139,115,85,0.35); border-radius: 3px; }
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim     { opacity: 0; animation: fadeUp 600ms ease-out forwards; }
+  .anim-d1  { animation-delay: 100ms; }
+  .anim-d2  { animation-delay: 200ms; }
+  .anim-d3  { animation-delay: 350ms; }
+  .anim-d4  { animation-delay: 450ms; }
+  .anim-d5  { animation-delay: 550ms; }
+  .anim-d6  { animation-delay: 650ms; }
+  .anim-d7  { animation-delay: 750ms; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--c-border);
+  transition: box-shadow 300ms ease-out, background 300ms ease-out;
+}
+.nav.scrolled {
+  box-shadow: 0 1px 24px rgba(26,24,20,0.07);
+}
+
+/* Logo */
+.nav-logo {
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+.nav-logo:hover { opacity: 0.78; }
+.nav-logo-primary {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  color: var(--c-primary);
+  display: block;
+}
+.nav-logo-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-top: -4px;
+  display: block;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--c-text);
+  text-decoration: none;
+  position: relative;
+  transition: color 200ms ease-out;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1px;
+  background: var(--c-accent);
+  width: 0;
+  transition: width 300ms ease-out;
+}
+.nav-links a:hover            { color: var(--c-accent); }
+.nav-links a:hover::after     { width: 100%; }
+.nav-links a:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Nav CTA */
+.nav-cta {
+  font-family: 'DM Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  background: var(--c-primary);
+  color: var(--c-light) !important;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: background 250ms ease-out, color 250ms ease-out !important;
+}
+.nav-cta::after     { display: none !important; }
+.nav-cta:hover      {
+  background: var(--c-surface) !important;
+  color: var(--c-highlight) !important;
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--c-primary);
+  padding: 4px;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: rgba(245,240,232,0.98);
+  padding: 24px 32px;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 1px solid var(--c-border);
+  box-shadow: 0 8px 24px rgba(26,24,20,0.08);
+  z-index: 199;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--c-text);
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+.mobile-menu a:hover { color: var(--c-accent); }
+.mobile-menu .nav-cta {
+  align-self: flex-start;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* =============================================
+   HERO SECTION
+   ============================================= */
+.hero {
+  padding: 180px 48px 64px;
+  min-height: 65vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial glow wash */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 120px; right: -60px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(196,167,125,0.09) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3xl);
+  align-items: end;
+}
+
+/* --- Hero Text (left) --- */
+.hero-text { padding-bottom: 8px; }
+
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: var(--sp-lg);
+}
+.hero-label::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--c-accent);
+  flex-shrink: 0;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -1px;
+  color: var(--c-primary);
+  margin-bottom: var(--sp-xl);
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--c-accent);
+}
+
+.hero-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--c-muted);
+  padding-left: var(--sp-xl);
+  border-left: 2px solid var(--c-border);
+  max-width: 42ch;
+}
+
+/* --- Hero Visual (right): Greek pattern panel --- */
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+}
+
+/* Aegean-toned greek key frame around the right panel */
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(61,90,79,0.18);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+/* Second inner border offset */
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(61,90,79,0.10);
+  border-radius: calc(var(--radius) - 2px);
+  pointer-events: none;
+}
+
+.hero-visual-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  gap: 24px;
+}
+
+/* Meander border (top & bottom of panel) */
+.hero-visual-wave {
+  width: 100%;
+  height: 18px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='18'%3E%3Cpath d='M0,9 H6 V4 H26 V14 H12 V9 H32' fill='none' stroke='%233D5A4F' stroke-width='1.2' stroke-linejoin='miter' opacity='0.25'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 32px 18px;
+  flex-shrink: 0;
+}
+
+.hero-visual-logo {
+  width: 160px;
+  height: 160px;
+  opacity: 0.12;
+  flex-shrink: 0;
+}
+.hero-visual-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: sepia(1) saturate(0.5);
+}
+
+.hero-visual-text {
+  text-align: center;
+}
+.hero-visual-text-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--c-muted);
+  letter-spacing: 0.5px;
+  display: block;
+  opacity: 0.7;
+}
+.hero-visual-text-year {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  display: block;
+  margin-top: 6px;
+  opacity: 0.65;
+}
+
+/* Radial glow inside panel */
+.hero-panel-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(196,167,125,0.07) 0%, transparent 65%);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+
+/* =============================================
+   DIVIDER
+   ============================================= */
+.section-divider {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-lg);
+}
+.divider-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--c-border);
+}
+.divider-ornament {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Olive branch ornament SVG */
+
+/* Aegean meander band between hero and cards */
+.meander-band {
+  width: 100%;
+  height: 22px;
+  margin: 16px 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='22'%3E%3Cpath d='M0,11 H6 V4 H26 V18 H12 V11 H32' fill='none' stroke='%233D5A4F' stroke-width='1.3' stroke-linejoin='miter' opacity='0.18'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 32px 22px;
+  background-position: center;
+}
+
+/* =============================================
+   CARD GRID
+   ============================================= */
+.cards-section {
+  padding: var(--sp-3xl) 48px var(--sp-4xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mosaic dot-grid background texture */
+.cards-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='1' fill='%23C4A77D' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 24px 24px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.cards-inner {
+  position: relative;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-rows: auto auto;
+  gap: var(--sp-lg);
+}
+
+/* =============================================
+   INDIVIDUAL CARDS
+   ============================================= */
+.menu-card {
+  position: relative;
+  background: var(--c-surface);
+  padding: 32px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 20px rgba(26,24,20,0.12);
+  transition: transform 250ms ease-out, box-shadow 250ms ease-out;
+}
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(26,24,20,0.18),
+              0 4px 16px rgba(196,167,125,0.1);
+}
+.menu-card:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+/* Card shimmer overlay */
+.menu-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(139,115,85,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: var(--radius);
+}
+
+/* Card bottom accent line — scales in on hover */
+.menu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--c-highlight);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms ease-out;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.menu-card:hover::after { transform: scaleX(1); }
+
+/* Featured card */
+.menu-card--featured {
+  grid-row: 1 / 3;
+  padding: 48px;
+  min-height: 420px;
+  background: var(--c-surface-deep);
+}
+.menu-card--featured::before {
+  background: linear-gradient(180deg, rgba(139,115,85,0.04) 0%, rgba(61,53,41,0.4) 100%);
+}
+
+/* Concentric circle pattern (featured only) */
+.card-pattern {
+  position: absolute;
+  top: 0; right: 0;
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* Card number */
+.card-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(196,167,125,0.12);
+  position: absolute;
+  top: 16px; right: 20px;
+  user-select: none;
+}
+.menu-card--featured .card-number { top: 24px; right: 28px; }
+
+/* Card icon */
+.card-icon {
+  color: var(--c-highlight);
+  margin-bottom: var(--sp-lg);
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+/* Card title */
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: -0.3px;
+  color: var(--c-light);
+  margin-bottom: var(--sp-sm);
+  line-height: 1.15;
+}
+.menu-card--featured .card-title { font-size: 36px; }
+
+/* Card description */
+.card-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(245,240,232,0.58);
+  max-width: 300px;
+  flex: 1;
+}
+
+/* Card CTA arrow */
+.card-arrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--sp-lg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c-highlight);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+.menu-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+.card-arrow svg {
+  transition: transform 200ms ease-out;
+  flex-shrink: 0;
+}
+.menu-card:hover .card-arrow svg {
+  transform: translateX(3px);
+}
+
+/* Fourth card explicit column */
+.menu-card:nth-child(4) {
+  grid-column: 2;
+}
+
+/* =============================================
+   FOOTER CTA
+   ============================================= */
+.footer-cta {
+  background: var(--c-primary);
+  padding: 72px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Aegean wave strip at top */
+.footer-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20'%3E%3Cpath d='M0,10 C15,0 30,0 30,10 C30,20 45,20 60,10' fill='none' stroke='%233D5A4F' stroke-width='1.2' opacity='0.4'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 60px 20px;
+  opacity: 0.5;
+}
+/* Radial glow */
+.footer-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(196,167,125,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.footer-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.footer-cta-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 38px;
+  color: var(--c-light);
+  margin-bottom: 8px;
+}
+.footer-cta-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: rgba(245,240,232,0.55);
+  margin-bottom: 36px;
+}
+.btn-book {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  background: var(--c-highlight);
+  color: var(--c-primary);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background 250ms ease-out, color 250ms ease-out,
+              box-shadow 250ms ease-out, transform 250ms ease-out;
+  box-shadow: 0 4px 16px rgba(196,167,125,0.22);
+}
+.btn-book:hover {
+  background: var(--c-light);
+  color: var(--c-primary);
+  box-shadow: 0 8px 28px rgba(196,167,125,0.3);
+  transform: translateY(-2px);
+}
+.btn-about {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  background: transparent;
+  color: rgba(245,240,232,0.6);
+  text-decoration: none;
+  border: 1px solid rgba(245,240,232,0.2);
+  border-radius: var(--radius);
+  margin-left: 16px;
+  transition: border-color 250ms ease-out, color 250ms ease-out,
+              background 250ms ease-out, transform 250ms ease-out;
+}
+.btn-about:hover {
+  border-color: var(--c-highlight);
+  color: var(--c-highlight);
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  background: var(--c-surface-deep);
+  color: rgba(245,240,232,0.55);
+  padding: 48px 48px 32px;
+  border-top: 1px solid rgba(139,115,85,0.12);
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 32px;
+}
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--c-light);
+  display: block;
+  margin-bottom: 4px;
+}
+.footer-brand-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  display: block;
+  margin-bottom: 16px;
+}
+.footer-tagline {
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 34ch;
+}
+.footer-col-heading {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: 14px;
+}
+.footer-col-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-col-list li,
+.footer-col-list a {
+  font-size: 14px;
+  color: rgba(245,240,232,0.52);
+  text-decoration: none;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+.footer-col-list a:hover { color: var(--c-highlight); }
+.footer-bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(139,115,85,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.footer-copy { font-size: 13px; }
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: rgba(245,240,232,0.3);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-links a:hover { color: rgba(245,240,232,0.65); }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    min-height: auto;
+  }
+  .hero { padding-top: 140px; min-height: auto; }
+  .hero-title { font-size: 52px; }
+  .hero-desc { max-width: 520px; }
+  .hero-visual { min-height: 260px; }
+
+  .cards-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .menu-card--featured {
+    grid-row: auto;
+    min-height: 360px;
+  }
+  .menu-card:nth-child(4) { grid-column: auto; }
+}
+
+@media (max-width: 768px) {
+  .nav           { padding: 16px 24px; }
+  .nav-links     { display: none; }
+  .nav-hamburger { display: block; }
+
+  .hero          { padding: 120px 24px 48px; }
+  .hero-title    { font-size: 42px; }
+
+  .section-divider { padding: 0 24px; }
+
+  .cards-section { padding: 48px 24px 64px; }
+  .cards-inner   { grid-template-columns: 1fr; }
+  .menu-card--featured { min-height: 300px; }
+  .menu-card     { min-height: 260px; }
+
+  .footer-cta    { padding: 56px 24px; }
+  .btn-about     { margin-left: 0; margin-top: 12px; display: block; }
+
+  footer         { padding: 40px 24px 28px; }
+  .footer-inner  { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 375px) {
+  .hero-title          { font-size: 36px; }
+  .card-title          { font-size: 24px; }
+  .menu-card--featured .card-title { font-size: 28px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- =============================================
+     NAVIGATION
+     ============================================= -->
+<nav class="nav" id="nav">
+  <a href="olive-at-hawker-redesign.html" class="nav-logo">
+    <span class="nav-logo-primary">olive</span>
+    <span class="nav-logo-sub">at Hawker</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="olive-at-hawker-redesign.html#reviews">Reviews</a></li>
+    <li><a href="olive-at-hawker-redesign.html#contact">Contact</a></li>
+    <li><a href="olive-at-hawker-redesign.html#booking" class="nav-cta">Book a Table</a></li>
+  </ul>
+
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <line x1="3" y1="6"  x2="21" y2="6"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="olive-at-hawker-redesign.html#reviews">Reviews</a>
+    <a href="olive-at-hawker-redesign.html#contact">Contact</a>
+    <a href="olive-at-hawker-redesign.html#booking" class="nav-cta">Book a Table</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- =============================================
+       HERO
+       ============================================= -->
+  <section class="hero" aria-label="Menus and banquets introduction">
+    <div class="hero-inner">
+
+      <!-- Left: editorial text -->
+      <div class="hero-text">
+        <p class="hero-label anim anim-d1">Menus &amp; Banquets</p>
+        <h1 class="hero-title anim anim-d2">
+          Find Your<br>
+          <em>Perfect</em> Meal
+        </h1>
+        <p class="hero-desc anim anim-d3">
+          From our seasonal à la carte menu to curated banquet experiences for groups — everything is made on site by head chef Steve Muscat and the team.
+        </p>
+      </div>
+
+      <!-- Right: decorative panel -->
+      <div class="hero-visual anim anim-d3">
+        <div class="hero-panel-glow" aria-hidden="true"></div>
+        <div class="hero-visual-inner">
+          <div class="hero-visual-wave" aria-hidden="true"></div>
+
+          <div class="hero-visual-logo" aria-hidden="true">
+            <img src="logo-tree.png" alt="" loading="lazy">
+          </div>
+
+          <div class="hero-visual-text" aria-hidden="true">
+            <span class="hero-visual-text-main">Greek &amp; Mediterranean</span>
+            <span class="hero-visual-text-year">Est. 1994 · Hawker, ACT</span>
+          </div>
+
+          <div class="hero-visual-wave" aria-hidden="true"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       DIVIDER
+       ============================================= -->
+  <div class="section-divider" aria-hidden="true">
+    <div class="divider-rule"></div>
+    <div class="divider-ornament">
+      <!-- Olive branch SVG ornament -->
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16,28 C16,28 8,20 8,12 C8,7.6 11.6,4 16,4 C20.4,4 24,7.6 24,12 C24,20 16,28 16,28 Z"
+              fill="none" stroke="#C4A77D" stroke-width="1" opacity="0.6"/>
+        <path d="M16,28 L16,8" stroke="#C4A77D" stroke-width="1" opacity="0.4"/>
+        <ellipse cx="13" cy="11" rx="3.5" ry="2" transform="rotate(-30 13 11)"
+                 fill="#C4A77D" opacity="0.35"/>
+        <ellipse cx="19" cy="14" rx="3.5" ry="2" transform="rotate(30 19 14)"
+                 fill="#C4A77D" opacity="0.35"/>
+        <ellipse cx="12" cy="17" rx="3" ry="1.8" transform="rotate(-20 12 17)"
+                 fill="#C4A77D" opacity="0.28"/>
+      </svg>
+    </div>
+    <div class="divider-rule"></div>
+  </div>
+
+  <!-- Aegean meander band -->
+  <div class="meander-band" aria-hidden="true"></div>
+
+  <!-- =============================================
+       CARD GRID
+       ============================================= -->
+  <section class="cards-section" aria-label="Menu options">
+    <div class="cards-inner">
+
+      <!-- ---- Card 1: A La Carte (FEATURED, spans 2 rows) ---- -->
+      <a href="olive-at-hawker-redesign.html#menus"
+         class="menu-card menu-card--featured anim anim-d4"
+         aria-label="A La Carte — Explore our full menu">
+
+        <!-- Concentric circle background pattern -->
+        <svg class="card-pattern" width="180" height="180" viewBox="0 0 180 180"
+             fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="90" cy="90" r="80" stroke="#C4A77D" stroke-width="0.5" opacity="0.5"/>
+          <circle cx="90" cy="90" r="60" stroke="#C4A77D" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="90" cy="90" r="40" stroke="#C4A77D" stroke-width="0.5" opacity="0.3"/>
+        </svg>
+
+        <span class="card-number" aria-hidden="true">01</span>
+
+        <!-- Book / menu icon -->
+        <div class="card-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
+               stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="6" x2="12" y2="42"/>
+            <line x1="36" y1="6" x2="36" y2="42"/>
+            <path d="M12,6 Q24,6 36,6"/>
+            <path d="M12,42 Q24,42 36,42"/>
+            <line x1="16" y1="14" x2="32" y2="14"/>
+            <line x1="16" y1="21" x2="32" y2="21"/>
+            <line x1="16" y1="28" x2="26" y2="28"/>
+          </svg>
+        </div>
+
+        <h2 class="card-title">A La Carte</h2>
+        <p class="card-desc">
+          Our full menu with entrées, mains, desserts and seasonal specials — crafted daily with the finest local produce.
+        </p>
+        <div class="card-arrow">
+          <span>Explore Menu</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="8" x2="13" y2="8"/>
+            <polyline points="9,4 13,8 9,12"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- ---- Card 2: Banquet I ---- -->
+      <a href="olive-at-hawker-redesign.html#menus"
+         class="menu-card anim anim-d5"
+         aria-label="Banquet I — View details for intimate groups">
+
+        <span class="card-number" aria-hidden="true">02</span>
+
+        <!-- Wine glass icon -->
+        <div class="card-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
+               stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="24" cy="18" rx="11" ry="14"/>
+            <ellipse cx="24" cy="26" rx="7" ry="4"/>
+            <line x1="24" y1="32" x2="24" y2="42"/>
+            <line x1="17" y1="42" x2="31" y2="42"/>
+          </svg>
+        </div>
+
+        <h2 class="card-title">Banquet I</h2>
+        <p class="card-desc">
+          A curated feast for intimate groups and celebrations.
+        </p>
+        <div class="card-arrow">
+          <span>View Details</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="8" x2="13" y2="8"/>
+            <polyline points="9,4 13,8 9,12"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- ---- Card 3: Banquet II ---- -->
+      <a href="olive-at-hawker-redesign.html#menus"
+         class="menu-card anim anim-d6"
+         aria-label="Banquet II — View details for extended banquet">
+
+        <span class="card-number" aria-hidden="true">03</span>
+
+        <!-- Champagne flutes icon -->
+        <div class="card-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
+               stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <!-- Left flute -->
+            <path d="M14,8 L11,30 L18,30 L15,8"/>
+            <line x1="14.5" y1="30" x2="14.5" y2="40"/>
+            <line x1="10"   y1="40" x2="19"   y2="40"/>
+            <!-- Right flute -->
+            <path d="M34,8 L31,30 L38,30 L35,8"/>
+            <line x1="34.5" y1="30" x2="34.5" y2="40"/>
+            <line x1="30"   y1="40" x2="39"   y2="40"/>
+            <!-- Clink chevron -->
+            <polyline points="21,5 24,9 27,5"/>
+          </svg>
+        </div>
+
+        <h2 class="card-title">Banquet II</h2>
+        <p class="card-desc">
+          An extended banquet experience with more variety and indulgence.
+        </p>
+        <div class="card-arrow">
+          <span>View Details</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="8" x2="13" y2="8"/>
+            <polyline points="9,4 13,8 9,12"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- ---- Card 4: Banquet 10+ (explicit col 2) ---- -->
+      <a href="olive-at-hawker-redesign.html#menus"
+         class="menu-card anim anim-d7"
+         aria-label="Banquet 10 plus — Group dining enquiry"
+         style="grid-column:2">
+
+        <span class="card-number" aria-hidden="true">04</span>
+
+        <!-- Sun / starburst icon -->
+        <div class="card-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
+               stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round">
+            <circle cx="24" cy="24" r="16"/>
+            <circle cx="24" cy="24" r="8"/>
+            <!-- 8 radiating lines -->
+            <line x1="24" y1="2"  x2="24" y2="8"/>
+            <line x1="24" y1="40" x2="24" y2="46"/>
+            <line x1="2"  y1="24" x2="8"  y2="24"/>
+            <line x1="40" y1="24" x2="46" y2="24"/>
+            <line x1="7.5"  y1="7.5"  x2="11.8" y2="11.8"/>
+            <line x1="36.2" y1="36.2" x2="40.5" y2="40.5"/>
+            <line x1="40.5" y1="7.5"  x2="36.2" y2="11.8"/>
+            <line x1="11.8" y1="36.2" x2="7.5"  y2="40.5"/>
+          </svg>
+        </div>
+
+        <h2 class="card-title">Banquet 10+</h2>
+        <p class="card-desc">
+          Group dining for parties of ten or more — a grand shared experience.
+        </p>
+        <div class="card-arrow">
+          <span>Enquire Now</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="8" x2="13" y2="8"/>
+            <polyline points="9,4 13,8 9,12"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER CTA
+       ============================================= -->
+  <section class="footer-cta reveal" aria-label="Book a table">
+    <div class="footer-cta-inner">
+      <h2 class="footer-cta-heading">Ready to Dine?</h2>
+      <p class="footer-cta-sub">Reserve your table and let us take care of the rest.</p>
+      <div>
+        <a href="olive-at-hawker-redesign.html#booking" class="btn-book">Book a Table</a>
+        <a href="about.html" class="btn-about">Our Story</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =============================================
+     FOOTER
+     ============================================= -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+
+    <div>
+      <span class="footer-brand">olive</span>
+      <span class="footer-brand-sub">at Hawker</span>
+      <p class="footer-tagline">
+        Greek and Mediterranean family restaurant in Canberra. Every dish made on site, every day.
+      </p>
+    </div>
+
+    <div>
+      <p class="footer-col-heading">Find Us</p>
+      <ul class="footer-col-list">
+        <li>Shop 2, 78 Hawker Place</li>
+        <li>Hawker ACT 2614</li>
+        <li><a href="tel:0262552858">02 6255 2858</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="footer-col-heading">Hours</p>
+      <ul class="footer-col-list">
+        <li>Tue–Fri: Lunch &amp; Dinner</li>
+        <li>Saturday: Lunch &amp; Dinner</li>
+        <li>Sun–Mon: Closed</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2025 Olive at Hawker. All rights reserved.</span>
+    <nav class="footer-links" aria-label="Legal links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Accessibility</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- =============================================
+     JAVASCRIPT
+     ============================================= -->
+<script>
+(function () {
+  'use strict';
+
+  /* Nav scroll state */
+  const nav = document.getElementById('nav');
+  function updateNav() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  /* Hamburger toggle */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', function () {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* Scroll reveal */
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+}());
+</script>
+
+</body>
+</html>
