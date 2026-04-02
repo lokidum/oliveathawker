@@ -32,7 +32,7 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
   /* Editorial palette (about + menu sections) */
   --ep-primary:    #2C2417;
   --ep-accent:     #8B6F47;
-  --ep-bg:         #F0E8D5;
+  --ep-bg:         #F5F0E8;
   --ep-surface:    #FDFAF5;
   --ep-muted:      #6B5D4F;
   --ep-highlight:  #D4A853;
@@ -177,10 +177,10 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
 /* =============================================
    BOOKING
    ============================================= */
-.booking { padding: 100px 24px; background: var(--cream); }
+.booking { padding: 100px 24px; background: var(--dark-warm); }
 .booking-inner { max-width: 600px; margin: 0 auto; }
 .booking-header { text-align: center; margin-bottom: 48px; }
-.booking .section-title { color: #2C2618; }
+.booking .section-title { color: var(--cream); }
 .booking-form { background: var(--dark-card); padding: 48px 40px; box-shadow: 0 24px 64px rgba(0,0,0,0.12); border-radius: var(--ep-radius); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
 .form-group { margin-bottom: 0; }
@@ -206,10 +206,11 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
 /* =============================================
    TESTIMONIALS
    ============================================= */
-.testimonials { padding: 100px 0; background: var(--dark-warm); overflow: hidden; }
+.testimonials { padding: 100px 0; background: var(--cream); overflow: hidden; }
+.testimonials .section-title { color: var(--dark); }
 .testimonials-header { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
 .testimonials-arrows { display: flex; gap: 8px; }
-.arrow-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); background: transparent; color: var(--text-mid); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.arrow-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(44,38,24,0.18); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
 .arrow-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(139,119,58,0.08); }
 .testimonials-track { display: flex; gap: 20px; overflow-x: auto; padding: 0 24px 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .testimonials-track::-webkit-scrollbar { display: none; }
@@ -322,9 +323,9 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
 .ab-img img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.86; transition: transform 0.55s ease, opacity 0.3s ease; }
 .ab-img:hover img { transform: scale(1.04); opacity: 0.93; }
 .ab-img-1 { aspect-ratio: 4/5; }
-.ab-img-2 { aspect-ratio: 1/1; margin-top: 48px; }
-.ab-img-3 { aspect-ratio: 1/1; margin-top: -32px; }
-.ab-img-4 { aspect-ratio: 4/5; }
+.ab-img-2 { aspect-ratio: 4/5; margin-top: 40px; }
+.ab-img-3 { aspect-ratio: 3/2; }
+.ab-img-4 { aspect-ratio: 3/2; margin-top: 40px; }
 .ab-img-label {
   position: absolute;
   bottom: 10px; left: 10px;
@@ -443,7 +444,7 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
   max-width: 62ch;
 }
 /* Drop cap */
-.ab-story-text p:first-of-type::first-letter {
+.ab-story-text > p:first-of-type::first-letter {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   font-size: 66px;
@@ -451,7 +452,7 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
   line-height: 0.78;
   margin-right: 8px;
   margin-top: 10px;
-  color: var(--ep-terracotta);
+  color: #8B7355;
 }
 
 /* Pull quote */
@@ -871,20 +872,20 @@ body { background: #0f0f0a; font-family: 'DM Sans', sans-serif; color: #C4BCA8; 
       <div class="ab-visual reveal">
         <div class="ab-img-grid">
           <div class="ab-img ab-img-1">
-            <img src="owners-current.png" alt="George and Dimitri Yianoulakis" loading="lazy">
-            <span class="ab-img-label">George &amp; Dimitri</span>
+            <img src="interior-full.png" alt="The Olive at Hawker dining room" loading="lazy">
+            <span class="ab-img-label">The dining room</span>
           </div>
           <div class="ab-img ab-img-2">
             <img src="neon-sign.png" alt="The Olive neon sign" loading="lazy">
             <span class="ab-img-label">The Olive sign</span>
           </div>
           <div class="ab-img ab-img-3">
-            <img src="interior-plants.png" alt="Our kitchen" loading="lazy">
-            <span class="ab-img-label">Our kitchen</span>
+            <img src="interior-plants.png" alt="Tables set for service" loading="lazy">
+            <span class="ab-img-label">Set for service</span>
           </div>
           <div class="ab-img ab-img-4">
-            <img src="interior-full.png" alt="The dining room" loading="lazy">
-            <span class="ab-img-label">The dining room</span>
+            <img src="owners-current.png" alt="George and Dimitri Yianoulakis" loading="lazy">
+            <span class="ab-img-label">George &amp; Dimitri</span>
           </div>
         </div>
         <div class="ab-editorial-line" aria-hidden="true"></div>
